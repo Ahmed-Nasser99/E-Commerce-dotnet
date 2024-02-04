@@ -8,8 +8,8 @@
         public string image { get; set; }
         public string quantity { get; set; }
         public decimal price { get; set; }
-        public SubCategory subcategoryId { get; set; }
-        public Brand brandId { get; set; }
+        public SubCategory subcategory { get; set; }
+        public Brand brand { get; set; }
 
     }
 }

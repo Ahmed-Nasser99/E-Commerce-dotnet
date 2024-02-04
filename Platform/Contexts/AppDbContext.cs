@@ -5,13 +5,19 @@ namespace Platform.Contexts
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext() : base()
+        public AppDbContext()
         {
-            
+
+        }    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+
         }
         public DbSet<Brand> brands { get; set; }
         public DbSet<Category> categorys { get; set; }
         public DbSet<SubCategory> subCategorys { get; set; }
         public DbSet<Product> products { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        }
     }
 }
