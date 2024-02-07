@@ -9,6 +9,7 @@ namespace Platform.Model.Auth
         [Required]
         public string Name { get; set; }
         [Required]
+        [UniqueEmail]
         [EmailAddress]
         public string Email { get; set; }
         [Required]

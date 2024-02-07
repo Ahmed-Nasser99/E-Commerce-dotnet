@@ -29,11 +29,42 @@ namespace Platform.Controller
 
                 if (result.Succeeded)
                 {
-                    return Ok("User Created Successfuly");
+                    return Ok("User Created Successfully");
                 }
                 else
                 {
-                    return BadRequest($"Can't Create User Check {result.Errors.Select(c => c.Description)}");
+                    // Convert IEnumerable<string> to a single string
+                    var errorMessage = string.Join(", ", result.Errors.Select(c => c.Description));
+                    return BadRequest($"Can't Create User. Check: {errorMessage}");
+                }
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+   
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(LoginViewModel LoginObject)
+        {
+            if (ModelState.IsValid)
+            {
+               var user = await _userManager.FindByEmailAsync(LoginObject.Email);
+                if (user != null)
+                {
+                    var checkPassword = await _userManager.CheckPasswordAsync(user, LoginObject.Password);
+                    if (checkPassword)
+                    {
+                        return Ok("Login Success");
+                    }
+                    else
+                    {
+                        return BadRequest("Invalid Password");
+                    }
+                }
+                else
+                {
+                    return BadRequest($"Invalid Enterd Email : {LoginObject.Email}");
                 }
             }
             else
