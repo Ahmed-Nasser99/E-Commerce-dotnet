@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Dtos\" />
-    <Folder Include="Controller\" />
     <Folder Include="Services\" />
     <Folder Include="Repositry\" />
   </ItemGroup>
