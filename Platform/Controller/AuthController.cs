@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Platform.Model.Auth;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Platform.Controller
 {
@@ -9,17 +13,19 @@ namespace Platform.Controller
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private UserManager<IdentityUser> _userManager;
-        public AuthController(UserManager<IdentityUser> userManager)
+        private UserManager<UserIdentity> _userManager;
+        private IConfiguration _config;
+        public AuthController(UserManager<UserIdentity> userManager,IConfiguration config)
         {
             _userManager = userManager;
+            _config = config;
         }
         [HttpPost("Signup")]
         public async Task<IActionResult> SignUp(SignupViewModel SignupObject)
         {
             if (ModelState.IsValid)
             {
-                var identityUser = new IdentityUser
+                var identityUser = new UserIdentity
                 {
                     UserName = SignupObject.Name,
                     Email = SignupObject.Email,
@@ -49,13 +55,27 @@ namespace Platform.Controller
         {
             if (ModelState.IsValid)
             {
-               var user = await _userManager.FindByEmailAsync(LoginObject.Email);
+                var user = await _userManager.FindByEmailAsync(LoginObject.Email);
                 if (user != null)
                 {
                     var checkPassword = await _userManager.CheckPasswordAsync(user, LoginObject.Password);
                     if (checkPassword)
                     {
-                        return Ok("Login Success");
+                        var claims = new List<Claim>()
+                                {
+                                    new Claim ("UserName",user.UserName),
+                                    new Claim(ClaimTypes.NameIdentifier,user.Id),
+                                };
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
+                        var token = new JwtSecurityToken(
+                            issuer: _config["JWT:ValidIssuer"],
+                            audience: _config["JWT:ValidAudience"],
+                            claims: claims,
+                            expires: DateTime.Now.AddDays(2),
+                            signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
+                        string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                        return Ok(new { isSuccess = true, token = tokenAsString, user = user });
                     }
                     else
                     {
@@ -72,5 +92,63 @@ namespace Platform.Controller
                 return BadRequest(ModelState);
             }
         }
+
+        #region reserPassword
+
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> resetPassword(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return BadRequest("User not found");
+            }
+
+            // Generate a random reset code (you can customize the length and format)
+            string resetCode = GenerateRandomCode(8);
+
+            // Update the user record with the reset code
+            user.resetCode = resetCode;
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return Ok(new { ResetCode = resetCode });
+            }
+            else
+            {
+                return StatusCode(500, "Failed to generate reset code");
+            }
+        }
+        private bool CheckResetCode(string resetCode)
+        {
+            // Check if any user has the given reset code
+            var usersWithCode = _userManager.Users.Where(u => u.resetCode == resetCode).ToList();
+            return usersWithCode.Any();
+        }
+
+        private string GenerateRandomCode(int length)
+        {
+            // Generate a random code using characters and numbers
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            var code = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                code[i] = chars[random.Next(chars.Length)];
+            }
+
+            // Check if the generated code is unique
+            if (CheckResetCode(new string(code)))
+            {
+                // If the code is not unique, generate a new code recursively
+                return GenerateRandomCode(length);
+            }
+
+            // If the code is unique, return it
+            return new string(code);
+        }
+
+        #endregion
     }
 }
