@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\CS\\E-Commerce\\Platform\\wwwroot\\EmailTemplate\\resetCode.html",
+      "PackagePath": "staticwebassets\\EmailTemplate\\resetCode.html"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.Platform.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.Platform.props",
+      "PackagePath": "build\\Platform.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.Platform.props",
+      "PackagePath": "buildMultiTargeting\\Platform.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.Platform.props",
+      "PackagePath": "buildTransitive\\Platform.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

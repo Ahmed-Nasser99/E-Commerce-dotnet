@@ -1,11 +1,37 @@
 {
   "Version": 1,
-  "Hash": "sHBMqxpHftgPCExJj57brtl04u0S5oNgmNfykuxhZ+Q=",
+  "Hash": "fsLfsmOrAAk7cqIdFuJhCqbQbk120/H3zYFFVnwDliE=",
   "Source": "Platform",
   "BasePath": "_content/Platform",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "Platform\\wwwroot",
+      "Source": "Platform",
+      "ContentRoot": "D:\\CS\\E-Commerce\\Platform\\wwwroot\\",
+      "BasePath": "_content/Platform",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\CS\\E-Commerce\\Platform\\wwwroot\\EmailTemplate\\resetCode.html",
+      "SourceId": "Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\CS\\E-Commerce\\Platform\\wwwroot\\",
+      "BasePath": "_content/Platform",
+      "RelativePath": "EmailTemplate/resetCode.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\EmailTemplate\\resetCode.html"
+    }
+  ]
 }

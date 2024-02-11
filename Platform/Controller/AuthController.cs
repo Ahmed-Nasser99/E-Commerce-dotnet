@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Platform.Model.Auth;
+using SendEmailsWithDotNet5.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -15,10 +17,13 @@ namespace Platform.Controller
     {
         private UserManager<UserIdentity> _userManager;
         private IConfiguration _config;
-        public AuthController(UserManager<UserIdentity> userManager,IConfiguration config)
+        private readonly IMailingService _mailingService;
+
+        public AuthController(UserManager<UserIdentity> userManager,IConfiguration config, IMailingService mailingService)
         {
             _userManager = userManager;
             _config = config;
+            _mailingService = mailingService;
         }
         [HttpPost("Signup")]
         public async Task<IActionResult> SignUp(SignupViewModel SignupObject)
@@ -109,11 +114,21 @@ namespace Platform.Controller
 
             // Update the user record with the reset code
             user.resetCode = resetCode;
+            user.PasswordHash = null;
             var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
             {
-                return Ok(new { ResetCode = resetCode });
+              var isSend =  await SendEmail(user);
+                if (isSend)
+                {
+                    return Ok("Email Send Seccessfuly");
+                }
+                else
+                {
+                    return BadRequest("Can't Send To This Email");
+                }
+             
             }
             else
             {
@@ -149,6 +164,71 @@ namespace Platform.Controller
             return new string(code);
         }
 
+
+        private async Task<bool> SendEmail(UserIdentity user)
+        {
+            try
+            {
+                var filePath = $"{Directory.GetCurrentDirectory()}\\wwwroot\\EmailTemplate\\resetCode.html";
+                var str = new StreamReader(filePath);
+
+                var mailText = str.ReadToEnd();
+                str.Close();
+
+                mailText = mailText.Replace("[resetCode]", user.resetCode);
+
+                await _mailingService.SendEmailAsync(user.Email, "Welcome From Platform This Is Reset Code", mailText);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         #endregion
+
+        [HttpPost("changePassword")]
+        public async Task<IActionResult> ChangePassword(string code, string newPassword)
+        {
+            try
+            {
+                var user = await _userManager.Users.FirstOrDefaultAsync(u => u.resetCode == code);
+
+                if (user != null)
+                {
+                    if (newPassword.Length >= 8)
+                    {
+                        var result = await _userManager.AddPasswordAsync(user, newPassword);
+
+                        if (result.Succeeded)
+                        {
+                            return Ok("Password reset successfully.");
+                        }
+                        else
+                        {
+                            // Concatenate error messages
+                            var errors = string.Join("\n", result.Errors.Select(e => e.Description));
+                            return BadRequest($"Failed to reset password: {errors}");
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest("Password does not meet complexity requirements.");
+                    }
+                }
+                else
+                {
+                    return BadRequest("Invalid Reset Code.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+
     }
 }
