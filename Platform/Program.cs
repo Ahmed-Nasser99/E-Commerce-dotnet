@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Platform.Contexts;
 using Platform.Model.Auth;
+using Platform.Repositry;
 using SendEmailsWithDotNet5.Services;
 using SendEmailsWithDotNet5.Settings;
 using System.Text;
