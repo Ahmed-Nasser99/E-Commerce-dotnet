@@ -21,6 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 builder.Services.AddTransient<IMailingService, MailingService>();
+builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 builder.Services.AddDbContext<AppIdentity>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 builder.Services.AddIdentity<UserIdentity, IdentityRole>()
