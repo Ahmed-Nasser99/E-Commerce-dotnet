@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Repositry\" />
+    <Folder Include="wwwroot\ProducsFile\" />
   </ItemGroup>
 
 </Project>

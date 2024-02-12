@@ -5,10 +5,7 @@ namespace Platform.Contexts
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext()
-        {
-
-        }    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }
@@ -18,6 +15,7 @@ namespace Platform.Contexts
         public DbSet<Product> products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Product>().Property(x => x.id).HasDefaultValueSql("NEWID()");
         }
     }
 }
