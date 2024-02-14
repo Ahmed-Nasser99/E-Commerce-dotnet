@@ -1,10 +1,11 @@
-﻿namespace Platform.Model
+﻿using Platform.Model;
+
+namespace Platform.Dtos
 {
-    public class SubCategory
+    public class AddSubcategoryViewModel
     {
-        public Guid id { get; set; }
         public string name { get; set; }
-        public string image { get; set; }
+        public IFormFile image { get; set; }
 
         public Guid categoryid { get; set; }
         public Category category { get; set; }
