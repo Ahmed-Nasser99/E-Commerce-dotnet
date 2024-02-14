@@ -18,13 +18,13 @@ namespace Platform.Services
                 var addToImage = Guid.NewGuid();
 
                 // Combine the upload folder path with the web root path
-                var upload = Path.Combine(hosting.WebRootPath, "@" + folderPath);
+                var upload = Path.Combine(hosting.WebRootPath,folderPath);
 
                 // Create the directory if it doesn't exist
                 Directory.CreateDirectory(upload);
 
                 // Combine the full path with the generated file name
-                var fullPath = Path.Combine(upload, addToImage + "_" + file.FileName);
+                var fullPath = Path.Combine(upload, $"{addToImage}_{file.FileName}");
 
                 // Copy the file to the specified location
                 using (var stream = new FileStream(fullPath, FileMode.Create))
@@ -33,7 +33,7 @@ namespace Platform.Services
                 }
 
                 // Return the generated GUID as a string
-                return addToImage + "_" + file.FileName;
+                return $"/{folderPath}/{addToImage}_{file.FileName}";
             }
             catch (Exception ex)
             {

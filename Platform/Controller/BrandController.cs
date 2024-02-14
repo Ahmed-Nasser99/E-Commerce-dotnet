@@ -10,29 +10,29 @@ namespace Platform.Controller
 {
     [Route("[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class BrandController : ControllerBase
     {
-        private readonly IUnitOfWork<Product> _product;
+        private readonly IUnitOfWork<Brand> _brand;
         private readonly IHostingEnvironment _hosting;
-        public ProductController(IUnitOfWork<Product> product, IHostingEnvironment hosting)
+
+        public BrandController(IUnitOfWork<Brand> brand,IHostingEnvironment hosting)
         {
-            _product = product;
+            _brand = brand;
             _hosting = hosting;
         }
-
         [HttpGet]
         public IActionResult GetAll()
         {
             try
             {
-                var products = _product.Entity.GetAll();
-                if (products != null)
+                var brands = _brand.Entity.GetAll();
+                if (brands != null)
                 {
-                    foreach (var product in products)
+                    foreach (var brand in brands)
                     {
-                        product.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{product.image}";
+                        brand.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{brand.image}";
                     }
-                    return Ok(products);
+                    return Ok(brands);
                 }
                 else
                 {
@@ -49,11 +49,11 @@ namespace Platform.Controller
         {
             try
             {
-                var product = _product.Entity.GetById(id);
-                if (product != null)
+                var brand = _brand.Entity.GetById(id);
+                if (brand != null)
                 {
-                    product.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{product.image}";
-                    return Ok(product);
+                    brand.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{brand.image}";
+                    return Ok(brand);
                 }
                 else
                 {
@@ -66,23 +66,19 @@ namespace Platform.Controller
             }
         }
         [HttpPost]
-        public IActionResult SaveNew([FromForm] AddProductViewModel model) {
+        public IActionResult SaveNew([FromForm] AddBrandViewModel model)
+        {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var product = new Product
+                    var brand = new Brand
                     {
-                        title = model.title,
-                        description = model.description,
-                        price = model.price,
-                        quantity = model.quantity,
-                        image = UploadServices.UploadFile(model.image, "ProducsFile", _hosting),
-                        brandid = model.brandid,
-                        subcategoryid = model.subcategoryid
+                        image = UploadServices.UploadFile(model.image, "BrandsFile", _hosting),
+                        name = model.name,
                     };
-                    _product.Entity.Insert(product);
-                    _product.Complete();
+                    _brand.Entity.Insert(brand);
+                    _brand.Complete();
                     return Ok("Data Inserted Successfuly");
 
                 }
@@ -103,8 +99,8 @@ namespace Platform.Controller
         {
             try
             {
-                _product.Entity.Delete(id);
-                _product.Complete();
+                _brand.Entity.Delete(id);
+                _brand.Complete();
                 return Ok("Product Deleted Successfuly");
             }
             catch (Exception ex)
@@ -113,27 +109,22 @@ namespace Platform.Controller
             }
         }
         [HttpPut("{id}")]
-        public IActionResult Update(Guid id,[FromForm] AddProductViewModel model)
+        public IActionResult Update(Guid id, [FromForm] AddBrandViewModel model)
         {
             try
             {
                 if (ModelState.IsValid && id != null)
                 {
 
-                    var product = new Product
+                    var brand = new Brand
                     {
-                        id = id,   
-                        title = model.title,
-                        description = model.description,
-                        price = model.price,
-                        quantity = model.quantity,
-                        image = UploadServices.UploadFile(model.image, "ProducsFile", _hosting),
-                        brandid = model.brandid,
-                        subcategoryid = model.subcategoryid
+                        id = id,
+                        image = UploadServices.UploadFile(model.image, "BrandsFile", _hosting),
+                        name = model.name,
                     };
 
-                    _product.Entity.Update(product);
-                    _product.Complete();
+                    _brand.Entity.Update(brand);
+                    _brand.Complete();
                     return Ok("Data Updated Successfuly");
 
                 }
@@ -149,6 +140,5 @@ namespace Platform.Controller
             }
 
         }
-
     }
 }

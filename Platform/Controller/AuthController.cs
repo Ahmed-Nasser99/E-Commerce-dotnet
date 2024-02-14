@@ -114,7 +114,6 @@ namespace Platform.Controller
 
             // Update the user record with the reset code
             user.resetCode = resetCode;
-            user.PasswordHash = null;
             var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
