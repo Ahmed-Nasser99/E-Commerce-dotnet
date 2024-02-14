@@ -112,6 +112,54 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\@ProducsFile\f0f49c19-6015-429a-82f8-4f332c5e1feb.JPG))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\BrandsFile\39a6d9bb-86f6-41ac-a39d-ad1751c2a010_IMG_E4462.JPG))">
+      <SourceType>Package</SourceType>
+      <SourceId>Platform</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Platform</BasePath>
+      <RelativePath>BrandsFile/39a6d9bb-86f6-41ac-a39d-ad1751c2a010_IMG_E4462.JPG</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\BrandsFile\39a6d9bb-86f6-41ac-a39d-ad1751c2a010_IMG_E4462.JPG))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\BrandsFile\51182667-ccd1-4d08-b67a-7e484f295a23_Web capture_27-1-2024_14040_www.figma.com.jpeg))">
+      <SourceType>Package</SourceType>
+      <SourceId>Platform</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Platform</BasePath>
+      <RelativePath>BrandsFile/51182667-ccd1-4d08-b67a-7e484f295a23_Web capture_27-1-2024_14040_www.figma.com.jpeg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\BrandsFile\51182667-ccd1-4d08-b67a-7e484f295a23_Web capture_27-1-2024_14040_www.figma.com.jpeg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\BrandsFile\f4c3ff48-ab6b-4f4d-b47f-9c97c7b3d56f_Web capture_27-1-2024_14040_www.figma.com.jpeg))">
+      <SourceType>Package</SourceType>
+      <SourceId>Platform</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Platform</BasePath>
+      <RelativePath>BrandsFile/f4c3ff48-ab6b-4f4d-b47f-9c97c7b3d56f_Web capture_27-1-2024_14040_www.figma.com.jpeg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\BrandsFile\f4c3ff48-ab6b-4f4d-b47f-9c97c7b3d56f_Web capture_27-1-2024_14040_www.figma.com.jpeg))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\EmailTemplate\resetCode.html))">
       <SourceType>Package</SourceType>
       <SourceId>Platform</SourceId>
