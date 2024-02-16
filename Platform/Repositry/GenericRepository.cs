@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Platform.Contexts;
+using System.Linq.Expressions;
 
 namespace Platform.Repositry
 {
@@ -18,14 +19,38 @@ namespace Platform.Repositry
             table.Remove(existing);
         }
 
-        public IEnumerable<T> GetAll()
+
+        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includes)
         {
-            return table.ToList();
+            IQueryable<T> query = table;
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return query.ToList();
         }
 
-        public T GetById(object id)
+        public T GetById(object id, params Expression<Func<T, object>>[] includes)
         {
-            return table.Find(id);
+            IQueryable<T> query = table;
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            var entityParameter = Expression.Parameter(typeof(T));
+            var idProperty = typeof(T).GetProperty("Id");
+            var idPropertyValue = Convert.ChangeType(id, idProperty.PropertyType);
+            var whereExpression = Expression.Lambda<Func<T, bool>>(
+                Expression.Equal(
+                    Expression.Property(entityParameter, idProperty),
+                    Expression.Constant(idPropertyValue)
+                ),
+                entityParameter
+            );
+
+            return query.FirstOrDefault(whereExpression);
         }
 
         public void Insert(T entity)

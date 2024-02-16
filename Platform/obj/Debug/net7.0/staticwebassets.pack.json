@@ -41,6 +41,18 @@
       "PackagePath": "staticwebassets\\BrandsFile\\f4c3ff48-ab6b-4f4d-b47f-9c97c7b3d56f_Web capture_27-1-2024_14040_www.figma.com.jpeg"
     },
     {
+      "Id": "D:\\CS\\E-Commerce\\Platform\\wwwroot\\CategoriesFile\\17663f23-b960-439c-aee1-472c0a47bcaa_Untitled.jpg",
+      "PackagePath": "staticwebassets\\CategoriesFile\\17663f23-b960-439c-aee1-472c0a47bcaa_Untitled.jpg"
+    },
+    {
+      "Id": "D:\\CS\\E-Commerce\\Platform\\wwwroot\\CategoriesFile\\20202a76-d8c3-4f89-9f7d-b96cef193c6d_Step3.png",
+      "PackagePath": "staticwebassets\\CategoriesFile\\20202a76-d8c3-4f89-9f7d-b96cef193c6d_Step3.png"
+    },
+    {
+      "Id": "D:\\CS\\E-Commerce\\Platform\\wwwroot\\CategoriesFile\\f658bfd2-0d1e-4252-b82e-749e8350a117_IMG_E4462.JPG",
+      "PackagePath": "staticwebassets\\CategoriesFile\\f658bfd2-0d1e-4252-b82e-749e8350a117_IMG_E4462.JPG"
+    },
+    {
       "Id": "D:\\CS\\E-Commerce\\Platform\\wwwroot\\EmailTemplate\\resetCode.html",
       "PackagePath": "staticwebassets\\EmailTemplate\\resetCode.html"
     },

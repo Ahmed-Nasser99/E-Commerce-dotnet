@@ -8,6 +8,5 @@ namespace Platform.Dtos
         public IFormFile image { get; set; }
 
         public Guid categoryid { get; set; }
-        public Category category { get; set; }
     }
 }

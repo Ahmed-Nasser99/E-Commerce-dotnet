@@ -27,12 +27,13 @@ namespace Platform.Controller
         {
             try
             {
-                var subCategories = _subCategory.Entity.GetAll();
+                var subCategories = _subCategory.Entity.GetAll(x => x.category);
                 if (subCategories != null)
                 {
                     foreach (var subCategory in subCategories)
                     {
                         subCategory.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{subCategory.image}";
+                        subCategory.category.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{subCategory.category.image}";
                     }
                     return Ok(subCategories);
                 }
@@ -51,7 +52,7 @@ namespace Platform.Controller
         {
             try
             {
-                var subCategory = _subCategory.Entity.GetById(id);
+                var subCategory = _subCategory.Entity.GetById(id,x=>x.category);
                 if (subCategory != null)
                 {
                     subCategory.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{subCategory.image}";
@@ -76,7 +77,7 @@ namespace Platform.Controller
                 {
                     var subCategory = new SubCategory
                     {
-                        image = UploadServices.UploadFile(model.image, "SubCategoriesFile", _hosting),
+                        image = UploadServices.UploadFile(model.image, "subCategoriesFile", _hosting),
                         name = model.name,
                         categoryid = model.categoryid
                     };
@@ -122,7 +123,7 @@ namespace Platform.Controller
                     var subCategory = new SubCategory
                     {
                         id = id,
-                        image = UploadServices.UploadFile(model.image, "BrandsFile", _hosting),
+                        image = UploadServices.UploadFile(model.image, "subCategoriesFile", _hosting),
                         name = model.name,
                         categoryid = model.categoryid
                     };
