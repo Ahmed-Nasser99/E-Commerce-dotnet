@@ -25,12 +25,14 @@ namespace Platform.Controller
         {
             try
             {
-                var products = _product.Entity.GetAll();
+                var products = _product.Entity.GetAll(x=>x.subcategory,x => x.brand);
                 if (products != null)
                 {
                     foreach (var product in products)
                     {
                         product.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{product.image}";
+                        product.subcategory.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{product.subcategory.image}";
+                        product.brand.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{product.brand.image}";
                     }
                     return Ok(products);
                 }
@@ -49,10 +51,12 @@ namespace Platform.Controller
         {
             try
             {
-                var product = _product.Entity.GetById(id);
+                var product = _product.Entity.GetById(id, x => x.subcategory, x => x.brand);
                 if (product != null)
                 {
                     product.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{product.image}";
+                    product.subcategory.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{product.subcategory.image}";
+                    product.brand.image = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}{product.brand.image}";
                     return Ok(product);
                 }
                 else

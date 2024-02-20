@@ -40,7 +40,7 @@ namespace Platform.Repositry
             }
 
             var entityParameter = Expression.Parameter(typeof(T));
-            var idProperty = typeof(T).GetProperty("Id");
+            var idProperty = typeof(T).GetProperty("id");
             var idPropertyValue = Convert.ChangeType(id, idProperty.PropertyType);
             var whereExpression = Expression.Lambda<Func<T, bool>>(
                 Expression.Equal(

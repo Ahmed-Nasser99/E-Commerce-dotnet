@@ -101,7 +101,7 @@ namespace Platform.Controller
             {
                 _brand.Entity.Delete(id);
                 _brand.Complete();
-                return Ok("Product Deleted Successfuly");
+                return Ok("Brand Deleted Successfuly");
             }
             catch (Exception ex)
             {
